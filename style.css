@@ -1,0 +1,392 @@
+/* Import a clean, modern font */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap');
+
+:root {
+  /* New Blue-Based Color Palette */
+  --color-primary: #005f9e;
+  /* Deep Blue */
+  --color-secondary: #3E8ACC;
+  /* Medium Blue */
+  --color-accent: #82C0FF;
+  /* Sky Blue */
+  --color-highlight: #E0EFFF;
+  /* Light Blue Tint */
+
+  /* Retained system colors */
+  --color-bg: var(--color-surface);
+  --color-surface: #ffffff;
+  --color-text: #212529;
+  --color-muted: var(--color-accent);
+  /* Adjusted to new accent */
+
+  /* Spacing */
+  --space-xs: 0.5rem;
+  --space-sm: 1rem;
+  --space-md: 1.5rem;
+  --space-lg: 2.5rem;
+
+  /* Border & Shadow */
+  --radius: 1rem;
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: clamp(0.875rem, 1vw + 0.5rem, 1.125rem);
+}
+
+body {
+  font-family: 'Montserrat', sans-serif;
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  line-height: 1.6;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+header,
+footer {
+  /* Gradient updated to blue palette */
+  background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+  color: var(--color-surface);
+  /* White text on blue gradient should be fine */
+  padding: var(--space-md);
+  text-align: center;
+  box-shadow: var(--shadow-md);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+header h1 {
+  font-weight: 600;
+  font-size: clamp(1.75rem, 2vw + 1rem, 2.5rem);
+}
+
+.screen {
+  width: min(95%, 1200px);
+  margin: var(--space-lg) auto;
+  padding: var(--space-lg);
+  background: var(--color-surface);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-lg);
+}
+
+.screen.hidden {
+  display: none;
+}
+
+.selection-options {
+  display: flex;
+  gap: var(--space-md);
+  flex-wrap: wrap;
+  font-size: clamp(1.25rem, 1.5vw + 0.5rem, 1.5rem);
+}
+
+.selection-options label {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  background: var(--color-bg);
+  /* Will be white by default */
+  padding: var(--space-xs) var(--space-sm);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.2s;
+}
+
+.selection-options label:hover {
+  transform: translateY(-2px);
+}
+
+.selection-options input[type="checkbox"] {
+  margin-right: var(--space-sm);
+  width: 1.5rem;
+  height: 1.5rem;
+  /* Optional: Style checkbox to match blue theme */
+  accent-color: var(--color-primary);
+}
+
+button {
+  font-family: inherit;
+  padding: var(--space-sm) var(--space-md);
+  font-size: clamp(1rem, 1.5vw + 0.5rem, 1.25rem);
+  border: none;
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+button:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+#start-button {
+  background-color: var(--color-primary);
+  color: var(--color-surface);
+}
+
+#start-button:hover {
+  /* Slightly lighter or darker shade of primary blue for hover */
+  background-color: #004c80;
+  /* Darker variant of #005f9e */
+}
+
+#game-container main {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+}
+
+.drop-zones {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--space-md);
+  width: 100%;
+}
+
+.drop-zone {
+  background: var(--color-bg);
+  /* White background */
+  border: 2px dashed var(--color-muted);
+  /* Will use the new --color-accent (Sky Blue) */
+  border-radius: var(--radius);
+  padding: var(--space-md);
+  min-height: 250px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  transition: background 0.2s, border-color 0.2s, box-shadow 0.2s;
+}
+
+.drop-zone h2 {
+  margin-bottom: var(--space-sm);
+  font-weight: 600;
+  color: var(--color-secondary);
+  /* Text color for h2 will be Medium Blue */
+}
+
+
+.drop-zone.drag-over {
+  background-color: var(--color-secondary);
+  /* Medium Blue background on drag over */
+  border-color: var(--color-primary);
+  /* Deep Blue border on drag over */
+  box-shadow: var(--shadow-md);
+  color: var(--color-surface);
+  /* Text color (if any direct text) changes to white */
+}
+
+/* Ensure h2 color in drag-over state is also readable */
+.drop-zone.drag-over h2 {
+  color: var(--color-surface);
+  /* White text for h2 on drag over */
+}
+
+.dropped-images {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+  justify-content: center;
+  margin-top: var(--space-sm);
+}
+
+.dropped-images img {
+  width: 3rem;
+  height: 3rem;
+  object-fit: cover;
+  border-radius: 0.25rem;
+  /* Adjusted border to use a subtle blue or keep it neutral */
+  border: 1px solid var(--color-highlight);
+  /* Light Blue Tint border */
+}
+
+.image-stack {
+  width: 100%;
+  border-radius: var(--radius);
+  background: var(--color-surface);
+  /* White background */
+  padding: var(--space-md);
+  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.05);
+  /* Neutral shadow, should be fine */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 250px;
+  position: relative;
+}
+
+.draggable-image {
+  max-width: 100%;
+  max-height: 150px;
+  cursor: grab;
+  transition: transform 0.2s, box-shadow 0.2s;
+  margin: 0;
+  ;
+}
+
+.draggable-image:active {
+  cursor: grabbing;
+  transform: scale(1.05);
+  box-shadow: var(--shadow-md);
+}
+
+.game-over-message {
+  font-size: clamp(1.25rem, 2vw + 0.5rem, 1.75rem);
+  color: var(--color-primary);
+  /* Game over message in Deep Blue */
+}
+
+.restart-button {
+  background-color: var(--color-secondary);
+  /* Restart button in Medium Blue */
+  color: var(--color-surface);
+  margin-top: var(--space-md);
+  display: block;
+  margin: var(--space-md) auto 0;
+}
+
+.restart-button:hover {
+  background-color: #2A6FB8;
+  /* Slightly different shade of secondary blue for hover */
+}
+
+/* --- Estils per al modal de paraules --- */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal-overlay.hidden {
+  display: none;
+}
+
+.modal-box {
+  background: #fff;
+  padding: 1.5rem;
+  border-radius: var(--radius);
+  max-width: 400px;
+  width: 90%;
+  box-shadow: var(--shadow-md);
+}
+
+.words-list {
+  max-height: 300px;
+  overflow-y: auto;
+  margin: 1rem 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.secondary-button {
+  background: var(--color-accent);
+  color: #000;
+}
+
+.controls {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+@keyframes shake {
+
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+
+  10%,
+  30%,
+  50%,
+  70%,
+  90% {
+    transform: translateX(-5px);
+  }
+
+  20%,
+  40%,
+  60%,
+  80% {
+    transform: translateX(5px);
+  }
+}
+
+.shake {
+  animation: shake 0.5s cubic-bezier(.36, .07, .19, .97) both;
+}
+
+.game-complete-message {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  text-align: center;
+  z-index: 1000;
+}
+
+.game-complete-buttons {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 20px;
+}
+
+.back-button {
+  position: absolute;
+  top: var(--space-sm);
+  left: var(--space-sm);
+  z-index: 1000;
+
+  font-family: inherit;
+  background-color: var(--color-accent);
+  color: var(--color-text);
+  padding: var(--space-xs) var(--space-sm);
+  font-size: clamp(0.9rem, 1.2vw + 0.4rem, 1.1rem);
+  border: none;
+  border-radius: var(--radius);
+  cursor: pointer;
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.2s, box-shadow 0.2s, background-color 0.2s;
+}
+
+.back-button:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+  background-color: #6FB0EF;
+}
